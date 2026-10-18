@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "DM Sans";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.625rem;
+
+    --background: 0.985 0.004 220;
+    --foreground: 0.19 0.02 225;
+    --card: 1.0 0.002 220;
+    --card-foreground: 0.19 0.02 225;
+    --popover: 1.0 0.002 220;
+    --popover-foreground: 0.19 0.02 225;
+
+    --primary: 0.44 0.095 215;
+    --primary-foreground: 0.985 0.005 215;
+
+    --secondary: 0.955 0.008 220;
+    --secondary-foreground: 0.28 0.02 225;
+    --muted: 0.955 0.008 220;
+    --muted-foreground: 0.5 0.018 225;
+
+    --accent: 0.6 0.13 190;
+    --accent-foreground: 0.16 0.02 190;
+
+    --destructive: 0.55 0.21 25;
+    --destructive-foreground: 0.985 0.005 25;
+
+    --success: 0.55 0.15 150;
+    --success-foreground: 0.985 0.005 150;
+    --warning: 0.72 0.15 78;
+    --warning-foreground: 0.2 0.03 78;
+
+    --border: 0.9 0.008 220;
+    --input: 0.9 0.008 220;
+    --ring: 0.44 0.095 215;
+
+    /* Ticket stage scale — six stages, distinguishable at a glance */
+    --stage-diterima: 0.52 0.05 235;
+    --stage-diterima-bg: 0.95 0.02 235;
+    --stage-diagnosa: 0.52 0.14 250;
+    --stage-diagnosa-bg: 0.94 0.03 250;
+    --stage-sparepart: 0.6 0.14 72;
+    --stage-sparepart-bg: 0.95 0.035 80;
+    --stage-dikerjakan: 0.5 0.16 295;
+    --stage-dikerjakan-bg: 0.94 0.035 295;
+    --stage-selesai: 0.5 0.14 152;
+    --stage-selesai-bg: 0.94 0.03 152;
+    --stage-diambil: 0.45 0.03 200;
+    --stage-diambil-bg: 0.92 0.012 205;
+
+    --chart-1: 0.52 0.05 235;
+    --chart-2: 0.52 0.14 250;
+    --chart-3: 0.6 0.14 72;
+    --chart-4: 0.5 0.16 295;
+    --chart-5: 0.5 0.14 152;
+
+    --sidebar: 0.965 0.006 220;
+    --sidebar-foreground: 0.22 0.02 225;
+    --sidebar-primary: 0.44 0.095 215;
+    --sidebar-primary-foreground: 0.985 0.005 215;
+    --sidebar-accent: 0.93 0.012 215;
+    --sidebar-accent-foreground: 0.3 0.03 215;
+    --sidebar-border: 0.9 0.008 220;
+    --sidebar-ring: 0.44 0.095 215;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.44 0.095 215),
+      oklch(0.5 0.11 205)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.985 0.004 220),
+      oklch(0.965 0.008 220)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0.16 0.014 225;
+    --foreground: 0.94 0.01 220;
+    --card: 0.2 0.016 225;
+    --card-foreground: 0.94 0.01 220;
+    --popover: 0.22 0.018 225;
+    --popover-foreground: 0.94 0.01 220;
+
+    --primary: 0.72 0.11 205;
+    --primary-foreground: 0.16 0.014 225;
+
+    --secondary: 0.24 0.018 225;
+    --secondary-foreground: 0.86 0.01 220;
+    --muted: 0.24 0.018 225;
+    --muted-foreground: 0.6 0.014 220;
+
+    --accent: 0.72 0.13 190;
+    --accent-foreground: 0.16 0.014 190;
+
+    --destructive: 0.65 0.19 25;
+    --destructive-foreground: 0.16 0.014 25;
+
+    --success: 0.7 0.15 150;
+    --success-foreground: 0.16 0.014 150;
+    --warning: 0.78 0.14 80;
+    --warning-foreground: 0.16 0.014 80;
+
+    --border: 0.3 0.016 225;
+    --input: 0.3 0.016 225;
+    --ring: 0.72 0.11 205;
+
+    --stage-diterima: 0.72 0.06 235;
+    --stage-diterima-bg: 0.28 0.03 235;
+    --stage-diagnosa: 0.72 0.13 250;
+    --stage-diagnosa-bg: 0.28 0.05 250;
+    --stage-sparepart: 0.78 0.14 78;
+    --stage-sparepart-bg: 0.3 0.05 78;
+    --stage-dikerjakan: 0.72 0.15 295;
+    --stage-dikerjakan-bg: 0.29 0.055 295;
+    --stage-selesai: 0.72 0.14 152;
+    --stage-selesai-bg: 0.28 0.045 152;
+    --stage-diambil: 0.68 0.04 200;
+    --stage-diambil-bg: 0.26 0.02 205;
+
+    --chart-1: 0.72 0.06 235;
+    --chart-2: 0.72 0.13 250;
+    --chart-3: 0.78 0.14 78;
+    --chart-4: 0.72 0.15 295;
+    --chart-5: 0.72 0.14 152;
+
+    --sidebar: 0.19 0.016 225;
+    --sidebar-foreground: 0.92 0.01 220;
+    --sidebar-primary: 0.72 0.11 205;
+    --sidebar-primary-foreground: 0.16 0.014 225;
+    --sidebar-accent: 0.26 0.02 215;
+    --sidebar-accent-foreground: 0.88 0.01 215;
+    --sidebar-border: 0.3 0.016 225;
+    --sidebar-ring: 0.72 0.11 205;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.72 0.11 205),
+      oklch(0.66 0.13 195)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.16 0.014 225),
+      oklch(0.19 0.016 225)
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}

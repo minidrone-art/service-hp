@@ -1,0 +1,291 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UpdateTicketInput = 
+ record {
+   accessories: opt vec text;
+   complaint: opt text;
+   customerName: opt text;
+   customerPhone: opt text;
+   deviceBrand: opt text;
+   deviceColor: opt text;
+   deviceModel: opt text;
+   estimatedCompletionDate: opt Timestamp;
+   estimatedCost: opt nat;
+   imei: opt text;
+ };
+type UpdateCustomerInput = 
+ record {
+   address: opt text;
+   email: opt text;
+   name: opt text;
+   phone: opt text;
+ };
+type Timestamp = nat;
+type TicketSummary = 
+ record {
+   createdAt: Timestamp;
+   customerName: text;
+   customerPhone: text;
+   deviceBrand: text;
+   deviceModel: text;
+   estimatedCompletionDate: Timestamp;
+   estimatedCost: nat;
+   id: TicketId;
+   imei: text;
+   status: TicketStatus;
+   ticketNumber: TicketNumber;
+   updatedAt: Timestamp;
+ };
+type TicketStatus = 
+ variant {
+   diagnosa;
+   diambil;
+   dikerjakan;
+   diterima;
+   menungguSparepart;
+   selesai;
+ };
+type TicketNumber = text;
+type TicketId = nat;
+type TicketFilter = 
+ record {
+   search: opt text;
+   status: opt TicketStatus;
+ };
+type TicketError = 
+ variant {
+   alreadyPickedUp: TicketId;
+   invalidTransition: record {
+                        from: TicketStatus;
+                        to: TicketStatus;
+                      };
+   notFound: TicketId;
+   unauthorized;
+ };
+type Ticket = 
+ record {
+   accessories: vec text;
+   complaint: text;
+   createdAt: Timestamp;
+   customerId: CustomerId;
+   customerName: text;
+   customerPhone: text;
+   device: Device;
+   estimatedCompletionDate: Timestamp;
+   estimatedCost: nat;
+   id: TicketId;
+   status: TicketStatus;
+   statusHistory: vec StatusHistoryEntry;
+   technicianNotes: vec TechnicianNote;
+   ticketNumber: TicketNumber;
+   updatedAt: Timestamp;
+ };
+type TechnicianNote = 
+ record {
+   note: text;
+   timestamp: Timestamp;
+ };
+type StatusHistoryEntry = 
+ record {
+   note: text;
+   status: TicketStatus;
+   timestamp: Timestamp;
+ };
+type StatusCounts = 
+ record {
+   diagnosa: nat;
+   diambil: nat;
+   dikerjakan: nat;
+   diterima: nat;
+   menungguSparepart: nat;
+   selesai: nat;
+ };
+type Result__1 = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Result_3 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result_2 = 
+ variant {
+   err: TicketError;
+   ok;
+ };
+type Result_1 = 
+ variant {
+   err: CustomerError;
+   ok: Customer;
+ };
+type Result = 
+ variant {
+   err: TicketError;
+   ok: Ticket;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DeviceServiceHistoryEntry = 
+ record {
+   complaint: text;
+   createdAt: Timestamp;
+   status: text;
+   ticketId: TicketId;
+   ticketNumber: text;
+ };
+type DeviceId = nat;
+type Device = 
+ record {
+   accessories: vec text;
+   brand: text;
+   color: text;
+   id: DeviceId;
+   imei: text;
+   model: text;
+ };
+type DashboardSummary = 
+ record {
+   attention: vec AttentionTicket;
+   counts: StatusCounts;
+   totalRevenue: nat;
+ };
+type CustomerProfile = 
+ record {
+   customer: Customer;
+   devices: vec CustomerDevice;
+   tickets: vec TicketId;
+ };
+type CustomerId = nat;
+type CustomerError = 
+ variant {
+   notFound: CustomerId;
+   unauthorized;
+ };
+type CustomerDevice = 
+ record {
+   brand: text;
+   color: text;
+   createdAt: Timestamp;
+   customerId: CustomerId;
+   id: DeviceId;
+   imei: text;
+   model: text;
+ };
+type Customer = 
+ record {
+   address: opt text;
+   createdAt: Timestamp;
+   email: opt text;
+   id: CustomerId;
+   name: text;
+   phone: text;
+ };
+type CreateTicketInput = 
+ record {
+   accessories: vec text;
+   complaint: text;
+   customerName: text;
+   customerPhone: text;
+   deviceBrand: text;
+   deviceColor: text;
+   deviceModel: text;
+   estimatedCompletionDate: Timestamp;
+   estimatedCost: nat;
+   imei: text;
+ };
+type CreateCustomerInput = 
+ record {
+   address: opt text;
+   email: opt text;
+   name: text;
+   phone: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type AttentionTicket = 
+ record {
+   customerName: text;
+   estimatedCompletionDate: Timestamp;
+   id: TicketId;
+   overdue: bool;
+   status: TicketStatus;
+   ticketNumber: text;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result_3);
+  _internet_identity_sign_in_start: () -> (blob);
+  /// Tambah catatan teknisi pada tiket (admin).
+  addTechnicianNote: (id: TicketId, note: text) -> (Result);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Ubah status tiket mengikuti alur tahapan (admin).
+  changeTicketStatus: (id: TicketId, status: TicketStatus, note: text) ->
+   (Result);
+  /// Buat pelanggan baru (admin).
+  createCustomer: (input: CreateCustomerInput) -> (Result_1);
+  /// Buat tiket servis baru (admin).
+  createTicket: (input: CreateTicketInput) -> (Result);
+  /// Hapus tiket (admin).
+  deleteTicket: (id: TicketId) -> (Result_2);
+  execute: (qJson: text) -> (Result__1) query;
+  /// Mengembalikan dokumentasi Markdown dari API publik backend.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Profil pelanggan beserta perangkat dan riwayat servisnya (admin).
+  getCustomerProfile: (id: CustomerId) -> (opt CustomerProfile) query;
+  /// Ringkasan dashboard: jumlah per status, tiket perlu perhatian, total pendapatan (admin).
+  getDashboardSummary: () -> (DashboardSummary) query;
+  /// Riwayat perbaikan perangkat berdasarkan IMEI/serial (admin).
+  getDeviceHistory: (imei: text) -> (vec DeviceServiceHistoryEntry) query;
+  /// Detail lengkap sebuah tiket (admin).
+  getTicket: (id: TicketId) -> (opt Ticket) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Daftar pelanggan dengan pencarian nama atau nomor HP (admin).
+  /// Pencarian kosong mengembalikan seluruh pelanggan.
+  listCustomers: (search: text) -> (vec Customer) query;
+  /// Daftar tiket dengan pencarian dan filter status (admin).
+  listTickets: (filter: TicketFilter) -> (vec TicketSummary) query;
+  schema: () -> (text) query;
+  /// Perbarui data pelanggan (admin).
+  updateCustomer: (id: CustomerId, input: UpdateCustomerInput) -> (Result_1);
+  /// Perbarui data tiket (admin). Tiket yang sudah diambil tidak dapat diubah.
+  updateTicket: (id: TicketId, input: UpdateTicketInput) -> (Result);
+}

@@ -1,0 +1,184 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type CustomerDevice__1018775690 =
+  {
+    brand : Text;
+    color : Text;
+    createdAt : Nat;
+    customerId : Nat;
+    id : Nat;
+    imei : Text;
+    model : Text
+  };
+type CustomerDevice__329208900 =
+  {
+    brand : Text;
+    color : Text;
+    createdAt : Timestamp__641042506;
+    customerId : CustomerId__263038465;
+    id : DeviceId__123553229;
+    imei : Text;
+    model : Text
+  };
+type CustomerId__1015005394 = Nat;
+type CustomerId__240921052 = CustomerId__1015005394;
+type CustomerId__263038465 = CustomerId__1015005394;
+type Customer__225412617 =
+  {
+    address : ?Text;
+    createdAt : Timestamp__641042506;
+    email : ?Text;
+    id : CustomerId__263038465;
+    name : Text;
+    phone : Text
+  };
+type Customer__321780215 =
+  {
+    address : ?Text;
+    createdAt : Nat;
+    email : ?Text;
+    id : Nat;
+    name : Text;
+    phone : Text
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DeviceId__123553229 = DeviceId__795919761;
+type DeviceId__519362840 = DeviceId__795919761;
+type DeviceId__795919761 = Nat;
+type Device__563705245 =
+  {
+    accessories : [Text];
+    brand : Text;
+    color : Text;
+    id : DeviceId__519362840;
+    imei : Text;
+    model : Text
+  };
+type Device__785466775 =
+  {
+    accessories : [Text];
+    brand : Text;
+    color : Text;
+    id : Nat;
+    imei : Text;
+    model : Text
+  };
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__563741893 =
+  {
+    accessControlState : AccessControlState__201339279;
+    counters :
+      {
+        var nextCustomerId : Nat;
+        var nextDeviceId : Nat;
+        var nextTicketId : Nat
+      };
+    customers : Map__230067015<Nat, Customer__321780215>;
+    devices : Map__230067015<Nat, CustomerDevice__1018775690>;
+    tickets : Map__230067015<Nat, Ticket__39146362>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__325662370 = {};
+type StatusHistoryEntry__78504480 =
+  {
+    note : Text;
+    status : TicketStatus__903820774;
+    timestamp : Timestamp__377905215
+  };
+type StatusHistoryEntry__881056739 =
+  {note : Text; status : TicketStatus__616046793; timestamp : Nat};
+type TechnicianNote__218566359 =
+  {note : Text; timestamp : Timestamp__377905215};
+type TechnicianNote__96093749 = {note : Text; timestamp : Nat};
+type TicketId__224230191 = Nat;
+type TicketId__838083827 = TicketId__224230191;
+type TicketNumber__27026057 = Text;
+type TicketNumber__304997461 = TicketNumber__27026057;
+type TicketStatus__616046793 =
+  {#diagnosa; #diambil; #dikerjakan; #diterima; #menungguSparepart; #selesai};
+type TicketStatus__903820774 =
+  {#diagnosa; #diambil; #dikerjakan; #diterima; #menungguSparepart; #selesai};
+type Ticket__39146362 =
+  {
+    accessories : [Text];
+    complaint : Text;
+    createdAt : Nat;
+    customerId : Nat;
+    customerName : Text;
+    customerPhone : Text;
+    device : Device__785466775;
+    estimatedCompletionDate : Nat;
+    estimatedCost : Nat;
+    id : Nat;
+    status : TicketStatus__616046793;
+    statusHistory : [StatusHistoryEntry__881056739];
+    technicianNotes : [TechnicianNote__96093749];
+    ticketNumber : Text;
+    updatedAt : Nat
+  };
+type Ticket__555771949 =
+  {
+    accessories : [Text];
+    complaint : Text;
+    createdAt : Timestamp__377905215;
+    customerId : CustomerId__240921052;
+    customerName : Text;
+    customerPhone : Text;
+    device : Device__563705245;
+    estimatedCompletionDate : Timestamp__377905215;
+    estimatedCost : Nat;
+    id : TicketId__838083827;
+    status : TicketStatus__903820774;
+    statusHistory : [StatusHistoryEntry__78504480];
+    technicianNotes : [TechnicianNote__218566359];
+    ticketNumber : TicketNumber__304997461;
+    updatedAt : Timestamp__377905215
+  };
+type Timestamp__301639476 = Nat;
+type Timestamp__377905215 = Timestamp__301639476;
+type Timestamp__641042506 = Timestamp__301639476;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "00000001_000000" : OldActor__325662370 -> NewActor__563741893
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable counters :
+    {
+      var nextCustomerId : Nat;
+      var nextDeviceId : Nat;
+      var nextTicketId : Nat
+    };
+  stable customers :
+    {
+      var root : Node__204828119<Nat, Customer__225412617>;
+      var size : Nat__227979830
+    };
+  stable devices :
+    {
+      var root : Node__204828119<Nat, CustomerDevice__329208900>;
+      var size : Nat__227979830
+    };
+  stable tickets :
+    {
+      var root : Node__204828119<Nat, Ticket__555771949>;
+      var size : Nat__227979830
+    }
+};

@@ -1,0 +1,18 @@
+{
+  "overview": "Aplikasi manajemen service HP untuk mengelola tiket servis dari intake perangkat sampai pengambilan.",
+  "features": [
+    "Kelola tiket servis dengan pencarian dan filter status",
+    "Catat data pelanggan dan perangkat termasuk IMEI/serial",
+    "Lacak riwayat perubahan status dan catatan teknisi",
+    "Lihat profil pelanggan beserta riwayat servisnya",
+    "Dashboard ringkasan tiket dan pendapatan"
+  ],
+  "category": "productivity",
+  "tags": [
+    "service-hp",
+    "manajemen-tiket",
+    "reparasi",
+    "dashboard"
+  ],
+  "last_updated": "2026-10-18T03:31:28.644Z"
+}
